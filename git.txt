@@ -1,0 +1,166 @@
+Exercice 1
+
+
+1)
+On entre les commandes demandées dans le terminal pour configurer Git
+
+2) 
+On crée le répertoire "depot_git" en tapant la commande "mkdir depot_git" dans le terminal puis on se rend dans le répertoire avec "cd depot_git" et on entre la commande "git init" dans le terminal.
+
+Grâce à la commande "ls -a" on voit que le répertoire "git" a été crée.
+
+3) 
+On crée un fichier quelconque dans le répertoire "depot_git" grâce à la commande "touch fichier_quelconque"
+
+4) 
+On tape la commande "git status" dans le terminal, et il nous affiche:
+
+__________________________________________________________________________
+Sur la branche master
+
+Validation initiale
+
+Fichiers non suivis:
+  (utilisez "git add <fichier>..." pour inclure dans ce qui sera validé)
+
+	fichier_quelconque
+
+aucune modification ajoutée à la validation mais des fichiers non suivis sont présents (utilisez "git add" pour les suivre)
+___________________________________________________________________________
+
+Cela veut dire que pour le moment aucun fichier n'a été ajouté pour être importé sur la branche principale. Par contre, un fichier (fichier_quelconque) non suivi se trouve dans notre répertoire, et nous pouvons l'ajouter pour le suivre grâce à la commande "add fichier_quelconque"
+
+
+5) On tape la commande "git add fichier_quelconque" dans le terminal, suivi de la commande "git status" . Voilà ce que le terminal nous affiche:
+
+________________________________________________________________________
+
+Sur la branche master
+
+Validation initiale
+
+Modifications qui seront validées :
+  (utilisez "git rm --cached <fichier>..." pour désindexer)
+
+	nouveau fichier: fichier_quelconque
+______________________________________________________________________
+
+Nous voyons que le fichier "fichier_quelconque" a désormais été indexé: il fera donc partie des fichiers qui seront importés sur la branche master.
+
+
+6)
+On tape la commande "git commit -m "un super message" " et le terminal nous affiche: 
+
+_____________________________________________________________________
+
+[master (commit racine) c6ba8ae] un super message
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 fichier_quelconque
+
+_____________________________________________________________________
+
+On voit que la bracnhe principale porte le nom "un super message", et que cette branche contient un unique fichier, dont le numéro est 100644.
+
+La commande commit nous permet donc de faire l'inventaire de tous les fichiers ayant été ajoutés au serveur.
+
+7) 
+On tape la commande "git status" dans le terminal et il nous affiche:
+_________________________________________________________
+
+Sur la branche master
+rien à valider, la copie de travail est propre
+
+_________________________________________________________
+
+Aucun fichier dans le répertoire n'a été modifié: il n'y a donc rien à ajouter sur la branche principale.
+
+8)
+
+La commande "git log -p" nous affiche :
+_______________________________________________________________________
+
+commit c6ba8aec280d1f1c83da460f506fa45cd68fe32a
+Author: 347497 <anida.khizar@etu.upmc.fr>
+Date:   Thu Oct 27 09:24:23 2016 +0200
+
+    un super message
+
+diff --git a/fichier_quelconque b/fichier_quelconque
+new file mode 100644
+index 0000000..e69de29
+_______________________________________________________________
+
+Elle nous fait l'inventaire de toutes les branches, ainsi que les fichiers qu'elles contiennent, l'historique des modifications de ces derniers et pleins d'autres informations.
+
+9)
+On modifie notre fichier et on relance la commande "git diff". Le terminal affiche:
+_____________________________________________________
+
+diff --git a/fichier_quelconque b/fichier_quelconque
+index e69de29..36ebb02 100644
+--- a/fichier_quelconque
++++ b/fichier_quelconque
+@@ -0,0 +1 @@
++message
+\ No newline at end of file
+______________________________________________________________
+
+Ceci nous indique quelles modifications ont été apportées au fichier sur la branche master
+
+Exercice 2
+
+1)
+On tape successivement les commandes "git branch test" et "git branch". Le terminal nous fait donc l'inventaire de toutes les branches déjà crées à savoir:
+___________________________________
+* master
+  test
+_____________________________________
+
+2) 
+On modifier notre fichier "fichier_quelconque"
+
+3) 
+On tape la commande "git checkout test" pour basculer sur la nouvelle branche crée
+On tape maintenant "git add fichier_quelconque" pour ajouter le fichier sur la branche test, puis on entre la commande "git commit -m "un test" "
+
+4)
+Cette commande nous permet de voir toutes les branches (sous forme de graphique), et sur laquelle o se trouve
+
+5)
+On bascule sur la branche master avec "git checkout master"; Puis on fusionne les deux branches avec "git merge test". 
+Grâce à la commande "git log --graph --decorate --oneline --all", on voit que cela a bien fonctionné:
+___________________________________________________________________________
+* 20ae2a1 (HEAD, test, master) un test
+* c6ba8ae un super message
+___________________________________________________________________________
+
+6)
+
+On modifie fichier_quelconque dans la branche master puis on l'ajoute et on fait un commit, on modifie ensuite la même ligne de fichier_quelconque dans la branche test, on l'ajoute et on commit et en fusionnant les deux, le temrinal affiche:
+____________________________________________________________
+Fusion automatique de fichier_quelconque
+CONFLIT (contenu) : Conflit de fusion dans fichier_quelconque
+La fusion automatique a échoué ; réglez les conflits et validez le résultat.
+_____________________________________________________________
+
+Ce message apparaît parce que nous avons essayé de modifier la même ligne du fichier dans les deux branches.
+
+
+7)
+On suit les instructions du git merge test:
+on édite le fichier "fichier_quelconque" pour corriger le conflit puis on l'ajoute sur la branche courante et on fait un commit. Enfin on entre la commande "git merge test"
+
+8)
+On supprime désormais la branche test avec la commande "git branch -d test"
+
+
+Exercice 3
+
+3) Pour cloner le répertoire, on utilise la commande "git clone https://github.com/PolytechUPMC-IED/tp5-AnidaKhizar.git"
+
+
+  
+
+
+
+

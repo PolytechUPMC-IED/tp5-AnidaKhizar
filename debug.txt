@@ -1,0 +1,62 @@
+Exercice 5
+
+1)
+On compile le fichier "hello.c" avec la commande "gcc -g Wall hello.c -o hello"
+
+2) Puis on lance la commande "valgrind ./hello". Le terminal affiche:
+__________________________________________________________________________
+==4586== Memcheck, a memory error detector
+==4586== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==4586== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==4586== Command: ./hello
+==4586== 
+Hello You !
+==4586== 
+==4586== HEAP SUMMARY:
+==4586==     in use at exit: 0 bytes in 0 blocks
+==4586==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==4586== 
+==4586== All heap blocks were freed -- no leaks are possible
+==4586== 
+==4586== For counts of detected and suppressed errors, rerun with: -v
+==4586== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+_________________________________________________________________________
+On observe qu'il n'y a pas d'erreurs dans le programme.
+
+
+3)
+On voit qu'aucune mémoire n'a été alloué avec malloc durant le programme, et que par conséquent aucune fuite mémoire n'est possible
+
+4)
+On compile le programme avec la commande "gcc -g -Wall mem.c -o mem"
+On lance ensuite valgrind à l'aide de la commande "valgrind ./mem"
+
+5)
+On voit qu'il y a une erreur à la ligne 6 car on n'a pas alloué une quantité suffisante de mémoire, et qu'on essaye d'accéder à une partie de la mémoire que l'on n'a pas réservé (en effet, dans la partie HEAP SUMMARY on voit qu'aucune mémoire n'a été alloué). Ceci cause une erreur de segmentation.
+Valgrind nous indique aussi que le programme a été arrêté de force avec un signal d'arrêt.
+
+6)
+On compile le fichier mem2 avec la commande "gcc -g -Wall mem2.c -o mem2" et on lance valgrind avec "valgrind ./mem2"
+Il nous demande d'entrer un nombre, on entre 47.
+Il y a une erreur à la ligne 12: on tente de stocker un entier dans un tableau, or on n'a pas réservé de la mémoire pour qu'il puisse contenir des valeurs. Ceci nous fait une erreur de segmentation.
+On initialise donc le tableau p:
+int *p=(int *)calloc(size,sizeof(int)) (après avoir demandé à l'utilisateur d'entrer une valeur pour size) 
+
+7)
+On recompile le fichier "mem2.c" et on le lance avec valgrind: il y a une erreur à la ligne 19 car on essaye d'utiliser une partie de la mémoire qui a déjà été libérée.
+On déplace l'instruction "free(p)" à la fin du code
+
+
+8)
+On compile le fichier mem3 et on le lance avec valgrind:
+on voit que l'on n'a pas libéré un bloc de mémoire, ce qui cause une fuite mémoire: on perd définitivement toutes les données que l'on n'a pas libéré
+
+
+9)
+On lance la commande "valgrind --leak-check=full ./mem3": il nous dit qu'il y a une erreur à la ligne 11, où on a alloué de la mémoire pour le tableau p (mais que l'on n'a pas libéré)
+
+10) 
+On rajoute donc une ligne "free (p)" à la fin du code.
+De plus la varibale sum est inutile, on l'enlève du code.
+
+
